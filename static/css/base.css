@@ -1,15 +1,16 @@
-@font-face{
-font-family:"Montserrat";
-src: url('fonts/Monsterrat-Regular.ttf');
+
+@font-face {
+  font-family: "Montserrat";
+  src: url('/static/css/fonts/Montserrat/Montserrat-Regular.ttf');
 }
 
+/* Другие стили */
 
-
-h1{
-color: green;
-font-size: 40pt;
-text-align: center;
-font-family: Montserrat;
+h1 {
+  color: green;
+  font-size: 40pt;
+  text-align: center;
+  font-family: Montserrat;
 }
 
 
