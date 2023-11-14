@@ -1,2 +1,17 @@
-body{
-    background: red;
+@font-face{
+font-family:"Montserrat";
+src: url('fonts/Monsterrat-Regular.ttf');
+}
+
+
+
+h1{
+color: green;
+font-size: 40pt;
+text-align: center;
+font-family: Montserrat;
+}
+
+
+
+
