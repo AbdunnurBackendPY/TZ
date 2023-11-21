@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        /* Add some basic styling if needed */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .task {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>To-Do List</h1>
+
+
+
+{% if tasks %}
+    <h2>Tasks:</h2>
+    <ul>
+        {% for task in tasks %}
+            <li class="task">{{ task.heading }} - {{ task.data }} {{ task.time }}: {{ task.description }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks available.</p>
+{% endif %}
+
+</body>
+</html>
