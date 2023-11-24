@@ -4,15 +4,19 @@ from django.contrib.auth import login
 from .forms import UserRegistrationForm
 from .models import Daily_planner
 from django.shortcuts import render
-from .forms import Daily_planner
+from .forms import Daily_plannerForm
 
-def Daily_planner(request):
+def daily_planner(request):
     if request.method == 'POST':
-        form = Daily_planner(request.POST)
+        form = Daily_plannerForm(request.POST)
         if form.is_valid():
-            form = Daily_planner()
-
-    return render(request, 'myapp/my_template.html', {'form': form})
+            daily_planner = form.save(commit=False)
+            daily_planner.user = request.user  # Set the user before saving
+            daily_planner.save()
+            return redirect("/")
+    else:
+        form = Daily_plannerForm()
+    return render(request, 'Daily_planner.html', {'form': form})
 
 
 

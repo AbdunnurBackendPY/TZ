@@ -26,12 +26,17 @@
     <h2>Tasks:</h2>
     <ul>
         {% for task in tasks %}
-            <li class="task">{{ task.heading }} - {{ task.data }} {{ task.time }}: {{ task.description }}</li>
+            <li class="task">
+                {{ task.heading }} - {{ task.data }} {{ task.time }}: {{ task.description }}</li>
         {% endfor %}
     </ul>
 {% else %}
     <p>No tasks available.</p>
 {% endif %}
-
+<form action="{% url 'daily_planner' %}" method="post" >
+    {{ form }}
+      {% csrf_token %}
+    <button type="submit">submit</button>
+  </form>
 </body>
 </html>
