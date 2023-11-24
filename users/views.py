@@ -3,6 +3,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import UserRegistrationForm
 from .models import Daily_planner
+from django.shortcuts import render
+from .forms import Daily_planner
+
+def Daily_planner(request):
+    if request.method == 'POST':
+        form = Daily_planner(request.POST)
+        if form.is_valid():
+            form = Daily_planner()
+
+    return render(request, 'myapp/my_template.html', {'form': form})
+
+
 
 @login_required
 def tasks(request):
@@ -21,7 +33,3 @@ def register(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
-
-
-
-
