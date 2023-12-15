@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
   <h1>Register</h1>
   <hr>
   <form action="{% url 'register' %}" method="post" >
@@ -8,4 +9,5 @@
       {% csrf_token %}
     <button type="submit">submit</button>
   </form>
+<img src="static/img/fa2955d85c313a7126be236ca79a228a.jpg" class="img-fluid" alt="">
 {% endblock %}

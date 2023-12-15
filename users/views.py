@@ -13,7 +13,7 @@ def daily_planner(request):
             daily_planner = form.save(commit=False)
             daily_planner.user = request.user  # Set the user before saving
             daily_planner.save()
-            return redirect("/")
+            return redirect("TODO")
     else:
         form = Daily_plannerForm()
     return render(request, 'Daily_planner.html', {'form': form})
