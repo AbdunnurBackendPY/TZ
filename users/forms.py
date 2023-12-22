@@ -1,7 +1,8 @@
 from .models import Daily_planner
-from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from allauth.account.forms import SignupForm
+from django import forms
 
 class EmailRegistrationForm(UserCreationForm):
     email = forms.EmailField()
@@ -16,8 +17,7 @@ class UserRegistrationForm(UserCreationForm):
         fields = ['username', 'password1', 'password2']
 
 
-from allauth.account.forms import SignupForm
-from django import forms
+
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=30, label='First Name', required=True)

@@ -1,23 +1,10 @@
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm
 from .models import Daily_planner
 from .forms import Daily_plannerForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import EmailRegistrationForm
 
-
-def register(request):
-    if request.method == 'POST':
-        form = EmailRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # Автоматически входить после успешной регистрации
-            return redirect('home')  # Замените 'home' на имя вашего представления для домашней страницы
-    else:
-        form = EmailRegistrationForm()
-
-    return render(request, 'registration/register.html', {'form': form})
 
 
 def daily_planner(request):

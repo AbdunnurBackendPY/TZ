@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -141,9 +142,9 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [
-    # ...
+    'social_core.backends.google.GoogleOAuth2',
     'allauth.account.auth_backends.AuthenticationBackend',
-    # ...
+
 ]
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Можно также выбрать 'optional' или 'none'
@@ -152,6 +153,8 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+
+
 
 
 ACCOUNT_FORMS = {
