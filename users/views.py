@@ -5,6 +5,13 @@ from .forms import UserRegistrationForm
 from .models import Daily_planner
 from django.shortcuts import render
 from .forms import Daily_plannerForm
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
 
 def daily_planner(request):
     if request.method == 'POST':
