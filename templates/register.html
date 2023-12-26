@@ -2,12 +2,21 @@
 
 {% block content %}
 
-  <h1>Register</h1>
+  <h1 class="text-center">Register</h1>
   <hr>
-  <form action="{% url 'register' %}" method="post" >
-    {{ form }}
-      {% csrf_token %}
-    <button type="submit">submit</button>
-  </form>
-<img src="static/img/fa2955d85c313a7126be236ca79a228a.jpg" class="img-fluid" alt="">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form action="{% url 'register' %}" method="post" class="mb-3">
+          {{ form }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary" style="background-color: #007BFF;">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
 {% endblock %}
+

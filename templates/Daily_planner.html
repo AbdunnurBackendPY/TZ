@@ -4,27 +4,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            background-color: 007BFF;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
             color: #333;
         }
-        h1 {
+
+        .main-container {
             text-align: center;
-            color: #008080;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
         }
-        h2 {
-            color: #006400;
+
+        h1 {
+            color: #007BFF;
+            margin-bottom: 20px;
         }
+
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #0056b3;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
         }
+
         .task {
             background-color: #fff;
             border: 1px solid #ddd;
@@ -32,45 +62,65 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
+
         form {
             margin-top: 20px;
         }
+
         button {
-            background-color: #008080;
+            background-color: #007BFF;
             color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
-            background-color: #006666;
+            background-color: #0056b3;
+        }
+
+        footer {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
 
-<h1>To-Do List</h1>
+<div class="main-container">
+    <h1>To-Do List</h1>
 
-{% if tasks %}
-    <h2>Tasks:</h2>
-    <ul>
-        {% for task in tasks %}
-            <li class="task">
-                <strong>{{ task.heading }}</strong> - {{ task.data }} {{ task.time }}: {{ task.description }}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No tasks available.</p>
-{% endif %}
+    {% if tasks %}
+        <h2>Tasks:</h2>
+        <ul>
+            {% for task in tasks %}
+                <li class="task">
+                    <strong>{{ task.heading }}</strong> - {{ task.data }} {{ task.time }}: {{ task.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tasks available.</p>
+    {% endif %}
 
-<form action="{% url 'daily_planner' %}" method="post">
-    {{ form }}
-    {% csrf_token %}
-    <button type="submit">Submit</button>
-</form>
+    <form action="{% url 'daily_planner' %}" method="post">
+        {{ form }}
+        {% csrf_token %}
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
-{% endblock %}
+<footer>
+    <p>Additional Information About Your Site</p>
+</footer>
+
 </body>
 </html>
+
+{% endblock %}

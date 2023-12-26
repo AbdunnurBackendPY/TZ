@@ -9,6 +9,10 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2']
 
+        widgets = {'username': forms.TextInput(attrs={'type': 'text'}),
+                    'password1': forms.TextInput(attrs={'type': 'text'}),
+                    'password': forms.TextInput(attrs={'type': 'text'})}
+
 
 class Daily_plannerForm(forms.ModelForm):
     class Meta:
