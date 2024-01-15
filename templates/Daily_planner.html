@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +101,7 @@
         <ul>
             {% for task in tasks %}
                 <li class="task">
-                    <strong>{{ task.heading }}</strong> - {{ task.data }} {{ task.time }}: {{ task.description }}
+                    <strong>{{ task.heading }}, </strong> - {{ task.data }} {{ task.time }}: {{ task.description }}
                 </li>
             {% endfor %}
         </ul>

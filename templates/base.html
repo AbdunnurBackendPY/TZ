@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +24,11 @@
             justify-content: space-between;
             min-height: 100vh;
         }
+
+        .my-link {
+        cursor: url('{% static "static/img/beam.png" %}') 16 16, url('{% static "static/img/link.png" %}') 16 16, pointer;
+        }
+
 
         .main-container {
             text-align: center;
@@ -63,31 +69,31 @@
 <body>
     <div class="main-container">
         {% if user.is_authenticated %}
-            <h1>Welcome, {{ user.username }}!</h1>
+            <h1>{% trans "добро пожаловать" %}, {{ user.username }}!</h1>
         {% else %}
-            <h1>Welcome to Your Website</h1>
+            <h1>{% trans "Welcome to Your Website" %}, {{ user.username }}!</h1>
         {% endif %}
 
-        <p>Explore and enjoy our features:</p>
+        <p>{% trans "Explore and enjoy our features:" %}</p>
 
         <ul>
             <li class="list-group-item">
-                <a href="{% url 'home' %}" class="button">Home</a>
+                <a href="{% url 'home' %}" class="button">{% trans "Home" %}</a>
             </li>
 
             <li class="list-group-item">
-                <a href="{% url 'register' %}" class="button">Register</a>
+                <a href="{% url 'register' %}" class="button">{% trans "Register" %}</a>
             </li>
 
             <li class="list-group-item">
-                <a href="{% url 'login' %}" class="button">Login</a>
+                <a href="{% url 'login' %}" class="button">{% trans "Login" %}</a>
             </li>
 
             <li class="list-group-item">
-                <a href="{% url 'daily_planner' %}" class="button">Daily Planner</a>
+                <a href="{% url 'daily_planner' %}" class="button">{% trans "Daily Planner" %}</a>
             </li>
             <li class="list-group-item">
-                <a href="{% url 'logout' %}" class="button">logout</a>
+                <a href="{% url 'logout' %}" class="button">{% trans "logout" %}</a>
             </li>
         </ul>
 
@@ -97,7 +103,21 @@
 
     <!-- Footer -->
     <footer>
-        <p>Additional Information About Your Site</p>
+        <p>{% trans "Additional Information About Your Site" %}</p>
     </footer>
+<form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}">
+    <select name="language">
+        {% get_current_language as current_language %}
+        {% get_available_languages as available_languages %}
+        {% for lang in available_languages %}
+            <option value="{{ lang.0 }}" {% if lang.0 == current_language %}selected{% endif %}>
+                {{ lang.1 }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="{% trans 'Switch' %}">
+</form>
 </body>
 </html>
