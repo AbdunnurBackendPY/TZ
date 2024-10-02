@@ -1,4 +1,4 @@
- from .models import Daily_planner
+from .models import Daily_planner
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from allauth.account.forms import SignupForm
@@ -15,6 +15,10 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
+        widgets = {'username': forms.TextInput(attrs={'type': 'text'}),
+                    'password1': forms.TextInput(attrs={'type': 'text'}),
+                    'password': forms.TextInput(attrs={'type': 'text'})}
 
 
 
