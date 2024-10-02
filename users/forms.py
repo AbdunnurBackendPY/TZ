@@ -1,4 +1,4 @@
-from .models import Daily_planner
+ from .models import Daily_planner
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from allauth.account.forms import SignupForm
