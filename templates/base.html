@@ -1,40 +1,124 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
-
-</head>
-<body>
-
-<style>
+    <style>
         body {
             background-image: url("{% static 'img/fa2955d85c313a7126be236ca79a228a.jpg' %}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             font-family: 'Roboto', sans-serif;
-            /* Дополнительные стили по вашему желанию */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        .my-link {
+        cursor: url('{% static "static/img/beam.png" %}') 16 16, url('{% static "static/img/link.png" %}') 16 16, pointer;
+        }
+
+
+        .main-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle box shadow */
+            margin-bottom: 20px; /* Add some margin to separate from the footer */
+        }
+
+        h1 {
+            color: #007BFF;
+        }
+
+        /* Style the anchor tags as buttons */
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* Footer styles */
+        footer {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            text-align: center;
+            padding: 10px;
         }
     </style>
 
     <title>User authenticate</title>
-    <ul>
-        <li class="list-group-item">
-            User: {{ user }}
-        </li>
+</head>
+<body>
+    <div class="main-container">
+        {% if user.is_authenticated %}
+            <h1>{% trans "добро пожаловать" %}, {{ user.username }}!</h1>
+        {% else %}
+            <h1>{% trans "Welcome to Your Website" %}, {{ user.username }}!</h1>
+        {% endif %}
 
-        <li class="list-group-item">
-            <a href="{% url 'home' %}">Home</a>
-        </li>
+        <p>{% trans "Explore and enjoy our features:" %}</p>
+
+        <ul>
+            <li class="list-group-item">
+                <a href="{% url 'home' %}" class="button">{% trans "Home" %}</a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{% url 'register' %}" class="button">{% trans "Register" %}</a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{% url 'login' %}" class="button">{% trans "Login" %}</a>
+            </li>
+
+            <li class="list-group-item">
+                <a href="{% url 'daily_planner' %}" class="button">{% trans "Daily Planner" %}</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{% url 'logout' %}" class="button">{% trans "logout" %}</a>
+            </li>
+        </ul>
 
 
         {% block content %}
         {% endblock %}
-    </ul>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>{% trans "Additional Information About Your Site" %}</p>
+    </footer>
+<form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}">
+    <select name="language">
+        {% get_current_language as current_language %}
+        {% get_available_languages as available_languages %}
+        {% for lang in available_languages %}
+            <option value="{{ lang.0 }}" {% if lang.0 == current_language %}selected{% endif %}>
+                {{ lang.1 }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="{% trans 'Switch' %}">
+</form>
 </body>
 </html>

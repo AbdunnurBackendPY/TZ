@@ -4,6 +4,12 @@ from .forms import UserRegistrationForm
 from .models import Daily_planner
 from .forms import Daily_plannerForm
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 
