@@ -3,8 +3,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm
 from .models import Daily_planner
 from .forms import Daily_plannerForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import logout
 
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 def daily_planner(request):
@@ -12,7 +16,7 @@ def daily_planner(request):
         form = Daily_plannerForm(request.POST)
         if form.is_valid():
             daily_planner = form.save(commit=False)
-            daily_planner.user = request.user  # Set the user before saving
+            daily_planner.user = request.user
             daily_planner.save()
             return redirect("TODO")
     else:
@@ -23,9 +27,14 @@ def daily_planner(request):
 @login_required
 def tasks(request):
     tasks = Daily_planner.objects.filter(user=request.user)
-    return render(request,
-                  'Daily_planner.html',
-                  {'tasks': tasks})
+
+    if request.method == 'POST' and 'delete_task' in request.POST:
+        task_id = request.POST.get('delete_task')
+        task = get_object_or_404(Daily_planner, pk=task_id, user=request.user)
+        task.delete()
+        return redirect('TODO')
+
+    return render(request, 'TODO.html', {'tasks': tasks})
 
 
 def register(request):
@@ -34,7 +43,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')  # Замените 'home' на URL вашей домашней страницы
+            return redirect('home')
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})

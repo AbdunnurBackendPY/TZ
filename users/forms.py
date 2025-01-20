@@ -1,40 +1,17 @@
 from .models import Daily_planner
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from allauth.account.forms import SignupForm
 from django import forms
 
-class EmailRegistrationForm(UserCreationForm):
-    email = forms.EmailField()
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
 
-
-
-
-class CustomSignupForm(SignupForm):
-    first_name = forms.CharField(max_length=30, label='First Name', required=True)
-    last_name = forms.CharField(max_length=30, label='Last Name', required=True)
-
-    def save(self, request):
-        user = super(CustomSignupForm, self).save(request)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.save()
-        return user
-
-
-
-
-
-
+        widgets = {'username': forms.TextInput(attrs={'type': 'text'}),
+                   'password1': forms.TextInput(attrs={'type': 'text'}),
+                   'password': forms.TextInput(attrs={'type': 'text'})}
 
 
 class Daily_plannerForm(forms.ModelForm):
