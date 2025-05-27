@@ -1,25 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
-</head>
-<body>
-
-<h1>To-Do List</h1>
-{% if tasks %}
-    <h2>Tasks:</h2>
-
-{% else %}
-{% endif %}
-<form action="{% url 'daily_planner' %}" method="post" >
-    {{ form }}
-      {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  <h1 class="text-center">To-Do List</h1>
+  <hr>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <form action="{% url 'daily_planner' %}" method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              {{ field }}
+            </div>
+          {% endfor %}
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
-</body>
-</html>

@@ -28,13 +28,22 @@ def daily_planner(request):
 def tasks(request):
     tasks = Daily_planner.objects.filter(user=request.user)
 
-    if request.method == 'POST' and 'delete_task' in request.POST:
-        task_id = request.POST.get('delete_task')
-        task = get_object_or_404(Daily_planner, pk=task_id, user=request.user)
-        task.delete()
-        return redirect('TODO')
+    if request.method == 'POST':
+        if 'delete_task' in request.POST:
+            task_id = request.POST.get('delete_task')
+            task = get_object_or_404(Daily_planner, pk=task_id, user=request.user)
+            task.delete()
+            return redirect('TODO')
+
+        if 'save_tasks' in request.POST:
+            completed_ids = request.POST.getlist('completed_tasks')
+            for task in tasks:
+                task.completed = str(task.pk) in completed_ids
+                task.save()
+            return redirect('TODO')
 
     return render(request, 'TODO.html', {'tasks': tasks})
+
 
 
 def register(request):

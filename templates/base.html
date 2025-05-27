@@ -4,45 +4,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <title>User authenticate</title>
+    <title>{% block title %}User Authenticate{% endblock %}</title>
+    <style>
+        /* base.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f8f8;
+    color: #05316D;
+    margin: 0;
+    padding: 0;
+}
+
+.site-header {
+    background-color: #0F4FA8;
+    color: #ffffff;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+    color: #6996D3;
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: #ffffff;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.my-4 {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+main {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #0F4FA8;
+    margin-bottom: 1.5rem;
+}
+
+a {
+    color: #4380D3;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #284C7E;
+}
+
+/* Новые стили для "кнопок" в хедере  */
+.nav-item-btn .nav-link {
+    background-color: #284C7E; /* Более темный синий фон  */
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-right: 0.5rem; /* Отступ между кнопками  */
+}
+
+.nav-item-btn .nav-link:hover,
+.nav-item-btn .nav-link:focus {
+    background-color: #4380D3; /* Средний синий при наведении  */
+    color: #ffffff;
+}
+
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        {% if user.is_authenticated %}
-            <h1>добро пожаловать {{ user.username }}!</h1>
-              <ul>
-            <li class="list-group-item">
-                <a href="{% url 'home' %}" class="button">Home</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{% url 'daily_planner' %}" class="button">Daily Planner</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{% url 'logout' %}" class="button">logout</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{% url 'TODO' %}" class="button">TODO</a>
-            </li>
-        </ul>
-        {% else %}
-            <li class="list-group-item">
-                <a href="{% url 'home' %}" class="button">Home</a>
-            </li>
-
-            <li class="list-group-item">
-                <a href="{% url 'register' %}" class="button">Register</a>
-            </li>
-
-            <li class="list-group-item">
-                <a href="{% url 'login' %}" class="button">Login</a>
-            </li>
-
-        {% endif %}
+    <header class="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">  <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item nav-item-btn">  <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item nav-item-btn">  <a class="nav-link" href="{% url 'daily_planner' %}">Daily Planner</a>
+                        </li>
+                         <li class="nav-item nav-item-btn">  <a class="nav-link" href="{% url 'TODO' %}">TODO</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <span class="nav-link">Welcome, {{ user.username }}</span>
+                            </li>
+                            <li class="nav-item nav-item-btn">  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item nav-item-btn">  <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            </li>
+                            <li class="nav-item nav-item-btn">  <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container my-4">
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
 </body>
 </html>
